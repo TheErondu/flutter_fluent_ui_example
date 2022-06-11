@@ -1,21 +1,20 @@
-import 'dart:convert';
-
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:hermes/models/report.dart';
 import 'package:hermes/services/api.dart';
 import 'package:hermes/utils/debugger.dart';
 
+import '../controllers/crud_controller.dart';
 import '../utils/tools.dart';
 
-class ReportView extends StatefulWidget {
-  ReportView({Key? key}) : super(key: key);
-
+class ListViewWidget extends StatefulWidget {
+  final String model;
+  const ListViewWidget({Key? key, required this.model}) : super(key: key);
   @override
-  ReportViewState createState() => ReportViewState();
+  ListViewWidgetState createState() => ListViewWidgetState();
 }
 
-class ReportViewState extends State<ReportView> {
-  final _futureReports = index('reports');
+class ListViewWidgetState extends State<ListViewWidget> {
+  late String route = widget.model;
+ late final _futureList = index(route);
   final reports = {
     'Mass in B minor': 'Johann Sebastian Bach',
     'Third Symphony': 'Ludwig van Beethoven',
@@ -42,7 +41,7 @@ class ReportViewState extends State<ReportView> {
     return ScaffoldPage(
       content: SizedBox.expand(
         child: FutureBuilder(
-            future: _futureReports,
+            future: _futureList,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
@@ -53,14 +52,13 @@ class ReportViewState extends State<ReportView> {
                   ),
                 );
               }
-              final reportsResponse = snapshot.data;
-              final reportsList =
-                  getJsonField(reportsResponse, r'''$''')?.toList() ?? [];
+              final listResponse = snapshot.data;
+              final list = getJsonField(listResponse, r'''$''')?.toList() ?? [];
 
               return ListView.builder(
-                  itemCount: reportsList.length,
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
-                    if (reportsList.isEmpty) {
+                    if (list.isEmpty) {
                       return Center(
                         child: Image.asset(
                           'assets/images/No_Data_Found.png',
@@ -68,8 +66,9 @@ class ReportViewState extends State<ReportView> {
                         ),
                       );
                     }
-                    final item = Report.fromJson((reportsList[index]));
-                    String title = item.bulletin.toString();
+                    final data = list[index];
+                    final item = getReportModel(data);
+                    String title = item.title.toString();
                     String subtitle = item.comment.toString();
                     return TappableListTile(
                         leading: const Icon(FluentIcons.report_library),

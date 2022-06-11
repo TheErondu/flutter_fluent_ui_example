@@ -5,7 +5,7 @@ class Report {
   String? anchor;
   String? director;
   String? cameraOperator;
-String? cameraOperator2;
+  String? cameraOperator2;
   String? visionMixer;
   String? soundTechnician;
   String? tx;
@@ -111,6 +111,11 @@ String? cameraOperator2;
     start = json['start'];
     end = json['end'];
     color = json['color'];
+    
+    //these fields below are addtional fields initialized for the list view title and subtitle.
+    //all models must provide these fields (title and comment) to the listview.
+    title = bulletin;
+    comment = comment;
   }
 
   Map<String, dynamic> toJson() {

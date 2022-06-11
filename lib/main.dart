@@ -18,9 +18,6 @@ Future<void> main() async {
       return false;
     }
   }
-
-  //    ? false
-  //  : prefs.getBool('isLoggedIn');
   runApp(FluentApp(
     debugShowCheckedModeBanner: false,
     home: authCheck() ? const DashboardView() : const LoginPage(),

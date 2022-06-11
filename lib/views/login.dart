@@ -1,5 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:hermes/utils/tools.dart';
+import 'package:hermes/views/dashboard.dart';
+import 'package:hive/hive.dart';
 
 import '../services/api.dart';
 
@@ -21,7 +24,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-
+    logout();
     _clearController.addListener(() {
       if (_clearController.text.length == 1 && mounted) setState(() {});
     });
@@ -81,8 +84,13 @@ class LoginPageState extends State<LoginPage> {
                   String email = emailController.text;
                   String password = passwordController.text;
                   _futureloginCall = loginCall(email, password);
-                  
                 });
+                if (authCheck() != false) {
+                  Navigator.push(
+                      context,
+                      FluentPageRoute(
+                          builder: (context) => const DashboardView()));
+                }
               },
             ),
           ),
