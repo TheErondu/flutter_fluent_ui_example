@@ -16,6 +16,7 @@ migrate_working_dir/
 *.iws
 .idea/
 *.hive
+*.lock
 
 
 # The .vscode folder contains launch configuration and tasks you configure in

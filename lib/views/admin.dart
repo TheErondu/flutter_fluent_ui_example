@@ -12,11 +12,11 @@ class AdminViewState extends State<AdminView> {
   Widget build(BuildContext context) {
     return const ScaffoldPage(
       header: Text(
-        "Dashboard",
+        "Administration",
         style: TextStyle(fontSize: 60),
       ),
       content: Center(
-        child: Text("Welcome to Dashboard Page!"),
+        child: Text("No Admin Settings Configured!"),
       ),
     );
   }
