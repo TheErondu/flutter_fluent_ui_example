@@ -2,7 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:hermes/services/api.dart';
 import 'package:hermes/utils/tools.dart';
 import 'package:hermes/views/admin.dart';
-import 'package:hermes/views/features.dart';
+import 'package:hermes/views/grids/features.dart';
 import 'package:hermes/views/login.dart';
 import 'package:hermes/views/list_view.dart';
 
@@ -95,9 +95,6 @@ class DashbordViewState extends State<DashboardView> {
                 icon: const Icon(FluentIcons.admin_a_logo32),
                 title: const Text("Administration")),
              PaneItem(
-                icon: const Icon(FluentIcons.app_icon_default),
-                title: const Text("Icons")),
-             PaneItem(
                 icon: const Icon(FluentIcons.diamond),
                 title: const Text("Features"))
           ],
@@ -125,7 +122,6 @@ class DashbordViewState extends State<DashboardView> {
             MessageView(),
             ListViewWidget(model:"reports"),
             AdminView(),
-            IconsPage(),
             FeaturesViewWidget(),
             LogoutDialog(),
           ],
