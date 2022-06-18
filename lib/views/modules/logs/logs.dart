@@ -1,49 +1,66 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:hermes/utils/debugger.dart';
+import '../../lists/logs.dart';
 
-import '../icons.dart';
-import '../list_view.dart';
-
-class FeaturesViewWidget extends StatefulWidget {
-  const FeaturesViewWidget({Key? key}) : super(key: key);
+class LogsGridWidget extends StatefulWidget {
+  const LogsGridWidget({Key? key}) : super(key: key);
 
   @override
-  FeaturesViewWidgetState createState() => FeaturesViewWidgetState();
+  LogsGridWidgetState createState() => LogsGridWidgetState();
 }
 
-class FeaturesViewWidgetState extends State<FeaturesViewWidget> {
+class LogsGridWidgetState extends State<LogsGridWidget> {
   bool showList = false;
-  late String r;
+  late String modelText;
+  late String logHeaderTitle;
   final features = {
-    "Director's Report": FluentIcons.report_library,
-    "Video Editor's": FluentIcons.report_library,
-    "OB Logs": FluentIcons.report_library,
-    "MCR Logs": FluentIcons.report_library,
-    "Production Show Logs": FluentIcons.report_library,
-    "Graphics Logs": FluentIcons.report_library
+    "Director Logs": FluentIcons.report_library,
+    "Video Editor Logs": FluentIcons.report_library,
+    "OB logs": FluentIcons.report_library,
+    "MCR logs": FluentIcons.report_library,
+    "Production Show logs": FluentIcons.report_library,
+    "Graphics News logs": FluentIcons.report_library
   };
   String filterText = '';
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
     return ScaffoldPage.withPadding(
-      header: PageHeader(
-        title: const Text('Fluent Icons Gallery showcase'),
-        commandBar: SizedBox(
-          width: 240.0,
-          child: Tooltip(
-            message: 'Filter by name',
-            child: TextBox(
-              suffix: const Icon(FluentIcons.search),
-              placeholder: 'Type to filter icons by name (e.g "logo")',
-              onChanged: (value) => setState(() {
-                filterText = value;
-              }),
+      header: showList
+          ? PageHeader(
+            padding: 2,
+              leading: IconButton(
+                onPressed: () {
+                  setState(() {
+                    showList = false;
+                  });
+                },
+                icon: const Icon(FluentIcons.back,size: 20,),
+              ),
+            )
+          : PageHeader(
+              leading: IconButton(
+                onPressed: () {
+                  setState(() {
+                    showList = false;
+                  });
+                },
+                icon: const Icon(FluentIcons.back),
+              ),
+              title: const Text('All Logs'),
+              commandBar: SizedBox(
+                width: 240.0,
+                child: Tooltip(
+                  message: 'Filter by name',
+                  child: TextBox(
+                    suffix: const Icon(FluentIcons.search),
+                    placeholder: 'Type to filter icons by name (e.g "logo")',
+                    onChanged: (value) => setState(() {
+                      filterText = value;
+                    }),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
       bottomBar: const InfoBar(
         title: Text('Tip:'),
         content: Text(
@@ -51,7 +68,7 @@ class FeaturesViewWidgetState extends State<FeaturesViewWidget> {
         ),
       ),
       content: showList
-          ? const ListViewWidget(model: "reports")
+          ? ListViewWidget(model: modelText,headerText:logHeaderTitle)
           : GridView.extent(
               maxCrossAxisExtent: 150,
               mainAxisSpacing: 10,
@@ -72,12 +89,10 @@ class FeaturesViewWidgetState extends State<FeaturesViewWidget> {
                   .map((e) {
                 return HoverButton(
                   onPressed: () {
-                    String text = textToModel(e.key);
-                    toLog(text);
                     setState(() {
                       showList = !showList;
-                      r = text;
-                      toLog(r);
+                      logHeaderTitle = e.key;
+                      modelText = textToModel(e.key.toString());
                     });
                   },
                   cursor: SystemMouseCursors.copy,
@@ -100,19 +115,22 @@ class FeaturesViewWidgetState extends State<FeaturesViewWidget> {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             padding: const EdgeInsets.all(6.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(e.value, size: 40),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    snakeCasetoSentenceCase(e.key),
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.fade,
+                            child: Card(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(e.value, size: 40),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      snakeCasetoSentenceCase(e.key),
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -134,4 +152,3 @@ String snakeCasetoSentenceCase(String original) {
 String textToModel(String original) {
   return original.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+|\s'), '');
 }
-

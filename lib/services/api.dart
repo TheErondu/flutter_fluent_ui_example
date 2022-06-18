@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:hermes/services/auth.dart';
-import 'package:hive/hive.dart';
+import 'package:hermes/utils/tools.dart';
 import 'package:http/http.dart' as http;
 
-var apiUrl = "http://129.205.123.122:8006/api";
+var apiUrl = "http://127.0.0.1:8000/api";
 
 Future<dynamic> getPublicIP() async {
   var url = Uri.parse('https://api64.ipify.org/');
@@ -17,7 +17,7 @@ Future<dynamic> getPublicIP() async {
       return 'Unknown';
     }
   } catch (e) {
-    return e;
+    return "error getting IP Address";
   }
 }
 
@@ -41,9 +41,8 @@ Future<void> loginCall(String email, String password) async {
   }
 }
 
-Future<List> index(query) async {
-  var box = await Hive.openBox('userdata');
-  final token = box.get('access_token');
+Future<List> getModule(query) async {
+  final token = await getFromStorage('userdata', 'access_token');
   final response = await http.get(
     Uri.parse('$apiUrl/$query'),
     headers: <String, String>{
@@ -61,7 +60,7 @@ Future<List> index(query) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    var data = (response.body);
+    var data = (response.statusCode);
     throw Exception('Failed to get List of Items, Error:$data');
   }
 }

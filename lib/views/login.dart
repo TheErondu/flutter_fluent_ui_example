@@ -41,8 +41,8 @@ class LoginPageState extends State<LoginPage> {
     return ScaffoldPage.scrollable(
       header: const PageHeader(title: Text('Login to Dashboard')),
       children: [
-        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
+        Center(
+          widthFactor:0.2,
             child: TextFormBox(
               header: 'Email',
               placeholder: 'Type your email here :)',
@@ -60,7 +60,6 @@ class LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-        ]),
         const SizedBox(height: 20),
         TextBox(
           header: 'Password',

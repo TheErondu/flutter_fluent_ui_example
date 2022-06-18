@@ -2,13 +2,13 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:hermes/services/api.dart';
 import 'package:hermes/utils/tools.dart';
 import 'package:hermes/views/admin.dart';
-import 'package:hermes/views/grids/features.dart';
+import 'package:hermes/views/modules/logs/logs.dart';
 import 'package:hermes/views/login.dart';
-import 'package:hermes/views/list_view.dart';
+import 'package:hermes/views/lists/logs.dart';
 
-import 'icons.dart';
 import 'logout_dialog.dart';
 import 'mesages.dart';
+import 'modules/logs/logs_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -35,14 +35,10 @@ class DashbordViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return FluentApp(
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          accentColor: Colors.blue,
-          iconTheme: const IconThemeData(size: 30)),
-      darkTheme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          accentColor: Colors.blue,
-          iconTheme: const IconThemeData(size: 30)),
+      theme:
+          ThemeData(brightness: Brightness.light, accentColor: Colors.blue),
+      darkTheme:
+          ThemeData(brightness: Brightness.dark, accentColor: Colors.blue),
       home: NavigationView(
         appBar: NavigationAppBar(
             actions: CommandBar(
@@ -78,7 +74,7 @@ class DashbordViewState extends State<DashboardView> {
               index = newIndex;
             });
           },
-          displayMode: PaneDisplayMode.auto,
+          displayMode: PaneDisplayMode.top,
           items: [
             PaneItem(
                 icon: const Icon(FluentIcons.go_to_dashboard),
@@ -89,14 +85,11 @@ class DashbordViewState extends State<DashboardView> {
                 icon: const Icon(FluentIcons.mail),
                 title: const Text("Messages")),
             PaneItem(
-                icon: const Icon(FluentIcons.report_library),
-                title: const Text("Reports")),
-            PaneItem(
                 icon: const Icon(FluentIcons.admin_a_logo32),
                 title: const Text("Administration")),
              PaneItem(
-                icon: const Icon(FluentIcons.diamond),
-                title: const Text("Features"))
+                icon: const Icon(FluentIcons.report_document),
+                title: const Text("Logs"))
           ],
           footerItems: [
             PaneItemSeparator(),
@@ -109,7 +102,7 @@ class DashbordViewState extends State<DashboardView> {
         ),
         content: NavigationBody(
           index: index,
-          children: const [
+          children:  const [
             ScaffoldPage(
               header: Text(
                 "Dashboard",
@@ -120,9 +113,8 @@ class DashbordViewState extends State<DashboardView> {
               ),
             ),
             MessageView(),
-            ListViewWidget(model:"reports"),
             AdminView(),
-            FeaturesViewWidget(),
+            LogsView(),
             LogoutDialog(),
           ],
         ),

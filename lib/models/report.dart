@@ -1,4 +1,4 @@
-class Report {
+class Directorlogs {
   int? id;
   int? userId;
   String? producer;
@@ -36,7 +36,7 @@ class Report {
   String? end;
   String? color;
 
-  Report(
+  Directorlogs(
       {this.id,
       this.userId,
       this.producer,
@@ -74,7 +74,7 @@ class Report {
       this.end,
       this.color});
 
-  Report.fromJson(Map<String, dynamic> json) {
+  Directorlogs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     producer = json['producer'];
