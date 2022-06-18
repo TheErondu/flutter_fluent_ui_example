@@ -21,7 +21,6 @@ class DashbordViewState extends State<DashboardView> {
   dynamic _connectionStatus;
   int index = 0;
 
-
   @override
   void initState() {
     super.initState();
@@ -35,8 +34,7 @@ class DashbordViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return FluentApp(
-      theme:
-          ThemeData(brightness: Brightness.light, accentColor: Colors.blue),
+      theme: ThemeData(brightness: Brightness.light, accentColor: Colors.blue),
       darkTheme:
           ThemeData(brightness: Brightness.dark, accentColor: Colors.blue),
       home: NavigationView(
@@ -66,7 +64,8 @@ class DashbordViewState extends State<DashboardView> {
               ],
             ),
             title: Text(
-                'Welcome to Hermes Workflow!, IP Address : $_connectionStatus')),
+                'Welcome to Hermes Workflow!, IP Address : ${_connectionStatus
+                 ?? "loading..."}')),
         pane: NavigationPane(
           selected: index,
           onChanged: (newIndex) {
@@ -74,7 +73,7 @@ class DashbordViewState extends State<DashboardView> {
               index = newIndex;
             });
           },
-          displayMode: PaneDisplayMode.top,
+          displayMode: PaneDisplayMode.compact,
           items: [
             PaneItem(
                 icon: const Icon(FluentIcons.go_to_dashboard),
@@ -87,7 +86,7 @@ class DashbordViewState extends State<DashboardView> {
             PaneItem(
                 icon: const Icon(FluentIcons.admin_a_logo32),
                 title: const Text("Administration")),
-             PaneItem(
+            PaneItem(
                 icon: const Icon(FluentIcons.report_document),
                 title: const Text("Logs"))
           ],
@@ -98,11 +97,10 @@ class DashbordViewState extends State<DashboardView> {
               title: const Text('Logout'),
             ),
           ],
-          
         ),
         content: NavigationBody(
           index: index,
-          children:  const [
+          children: const [
             ScaffoldPage(
               header: Text(
                 "Dashboard",
@@ -119,7 +117,6 @@ class DashbordViewState extends State<DashboardView> {
           ],
         ),
       ),
-      
     );
   }
 }
