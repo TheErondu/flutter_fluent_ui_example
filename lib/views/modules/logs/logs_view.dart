@@ -95,8 +95,8 @@ class LogsViewState extends State<LogsView> {
                     }
                     final data = list[index];
                     final item = getReportModel(data, route);
-                    String title = item.title.toString();
-                    String subtitle = item.comment.toString();
+                    String title = item.title??"loading..";
+                    String subtitle = item.comment??"loading..";
                     return Card(
                         backgroundColor: cardsBg,
                         child: Column(
@@ -123,7 +123,7 @@ class LogsViewState extends State<LogsView> {
                                       title,
                                       style: typography.subtitle
                                           ?.apply(fontSizeFactor:0.9),
-                                      maxLines: 3,
+                                      maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
