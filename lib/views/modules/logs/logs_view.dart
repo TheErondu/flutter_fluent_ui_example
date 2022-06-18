@@ -54,13 +54,7 @@ class LogsViewState extends State<LogsView> {
       height: 600,
       child: TabView(
         currentIndex: currentIndex,
-        onChanged: (index) => setState(() {
-          currentIndex = index;
-          modelText = textToModel(logs.entries.elementAt(index).key);
-          route = modelText;
-           futureLogs = getModule(route);
-          log(modelText);
-        }),
+        onChanged: (index) => refresh(index),
         tabs: List.generate(tabs, (index) {
           String logTitle = logs.entries.elementAt(index).key;
           return Tab(
@@ -101,9 +95,8 @@ class LogsViewState extends State<LogsView> {
                     }
                     final data = list[index];
                     final item = getReportModel(data, route);
-              
-                    String title = item.title.toString().isEmpty?"loading..":item.title.toString();
-                    String subtitle = item.comment.toString().isEmpty?"Loading":item.comment.toString();
+                    String title = item.title.toString();
+                    String subtitle = item.comment.toString();
                     return Card(
                         backgroundColor: cardsBg,
                         child: Column(
@@ -121,17 +114,20 @@ class LogsViewState extends State<LogsView> {
                                   child:
                                       const Icon(FluentIcons.report_document)),
                             ),
-                            Expanded(
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.only(left: 8, right: 8),
-                                child: Text(
-                                  title,
-                                  style: typography.subtitle
-                                      ?.apply(fontSizeFactor: 1.0),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                            Container(
+                              padding: const EdgeInsets.only(right: 8, left: 8,bottom: 5),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      title,
+                                      style: typography.subtitle
+                                          ?.apply(fontSizeFactor:0.9),
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Container(
@@ -158,5 +154,15 @@ class LogsViewState extends State<LogsView> {
         ),
       ),
     );
+  }
+
+  void refresh(int index) async {
+    return setState(() {
+        currentIndex = index;
+        modelText = textToModel(logs.entries.elementAt(index).key);
+        route = modelText;
+        futureLogs = getModule(route);
+        log(modelText);
+      });
   }
 }
