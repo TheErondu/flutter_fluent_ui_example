@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:hermes/services/auth.dart';
 import 'package:hermes/utils/tools.dart';
 import 'package:http/http.dart' as http;
 
-var apiUrl = "http://127.0.0.1:8000/api";
+var apiUrl = "http://129.205.123.122:8006/api";
 
 Future<dynamic> getPublicIP() async {
   var url = Uri.parse('https://api64.ipify.org/');

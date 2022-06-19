@@ -1,10 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:hermes/services/api.dart';
-import 'package:hermes/utils/tools.dart';
+import 'package:hermes/utils/themes.dart';
 import 'package:hermes/views/admin.dart';
-import 'package:hermes/views/modules/logs/logs.dart';
-import 'package:hermes/views/login.dart';
-import 'package:hermes/views/lists/logs.dart';
 
 import 'logout_dialog.dart';
 import 'mesages.dart';
@@ -34,11 +31,18 @@ class DashbordViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return FluentApp(
-      theme: ThemeData(brightness: Brightness.light, accentColor: Colors.blue),
-      darkTheme:
-          ThemeData(brightness: Brightness.dark, accentColor: Colors.blue),
+      theme: hermesLight,
+      darkTheme: hermesDark,
       home: NavigationView(
         appBar: NavigationAppBar(
+            leading: IconButton(
+              icon: const Icon(
+                FluentIcons.chrome_back,
+              ),
+              onPressed: () {
+                const DashboardView();
+              },
+            ),
             actions: CommandBar(
               mainAxisAlignment: MainAxisAlignment.end,
               overflowBehavior: CommandBarOverflowBehavior.noWrap,
@@ -64,8 +68,7 @@ class DashbordViewState extends State<DashboardView> {
               ],
             ),
             title: Text(
-                'Welcome to Hermes Workflow!, IP Address : ${_connectionStatus
-                 ?? "loading..."}')),
+                'Welcome to Hermes Workflow! - IP Address : ${_connectionStatus ?? "loading..."}')),
         pane: NavigationPane(
           selected: index,
           onChanged: (newIndex) {
@@ -120,3 +123,4 @@ class DashbordViewState extends State<DashboardView> {
     );
   }
 }
+

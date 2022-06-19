@@ -1,3 +1,4 @@
+import 'package:hermes/models/editor_logs.dart';
 import 'package:hermes/models/oblog.dart';
 import 'package:hermes/utils/debugger.dart';
 
@@ -14,6 +15,11 @@ getReportModel(dynamic data, dynamic route) {
     case "oblogs":
       {
        final parsed = Oblogs.fromJson(data);
+        return parsed;
+      }
+       case "videoeditorlogs":
+      {
+       final parsed = EditorLogs.fromJson(data);
         return parsed;
       }
 
