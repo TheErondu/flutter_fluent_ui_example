@@ -1,8 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:hermes/services/api.dart';
 import 'package:hermes/utils/colors.dart';
-import 'package:hermes/utils/debugger.dart';
-
 import '../../controllers/crud_controller.dart';
 import '../../utils/tools.dart';
 
@@ -19,7 +17,7 @@ class ListViewWidget extends StatefulWidget {
 class ListViewWidgetState extends State<ListViewWidget> {
   late String route = widget.model;
   late String headerText = widget.headerText;
-  late final _futureList = getModule(route);
+  late final _futureList = getModule(context,route);
   String filterText = '';
   @override
   Widget build(BuildContext context) {

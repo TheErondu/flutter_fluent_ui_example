@@ -39,7 +39,7 @@ class LogsViewState extends State<LogsView> {
   @override
   void initState() {
     super.initState();
-    futureLogs = getModule(route);
+    futureLogs = getModule(context,route);
   }
 
   @override
@@ -189,7 +189,7 @@ class LogsViewState extends State<LogsView> {
       currentIndex = index;
       modelText = textToModel(logs.entries.elementAt(index).key);
       route = modelText;
-      futureLogs = getModule(route);
+      futureLogs = getModule(context,route);
       log(modelText);
     });
   }

@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:hermes/services/auth.dart';
 import 'package:hermes/utils/tools.dart';
+import 'package:hermes/views/login.dart';
 import 'package:http/http.dart' as http;
 
 var apiUrl = "http://129.205.123.122:8006/api";
@@ -42,7 +43,7 @@ Future<void> loginCall(String email, String password) async {
   }
 }
 
-Future<List> getModule(query) async {
+Future<List> getModule(context, query) async {
   final token = await getFromStorage('userdata', 'access_token');
   final response = await http.get(
     Uri.parse('$apiUrl/$query'),
@@ -58,6 +59,15 @@ Future<List> getModule(query) async {
     //  toLog(response.body);
     List data = List<Map<String, dynamic>>.from(jsonDecode(response.body));
     return data;
+  } else if (response.statusCode == 401) {
+    final res = response.statusCode;
+
+    await Navigator.push(
+      context,
+      FluentPageRoute(
+        builder: (BuildContext context) => const LoginPage(),
+        ),);
+         throw Exception('Error: ($res Invalid Token!');
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.

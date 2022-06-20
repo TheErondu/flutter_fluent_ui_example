@@ -2,8 +2,6 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:hermes/utils/tools.dart';
 import 'package:hermes/views/dashboard.dart';
-import 'package:hive/hive.dart';
-
 import '../services/api.dart';
 
 class LoginPage extends StatefulWidget {
@@ -78,18 +76,22 @@ class LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Button(
               child: const Text('Submit'),
-              onPressed: () {
+              onPressed: () async  {
                 setState(() {
                   String email = emailController.text;
                   String password = passwordController.text;
                   _futureloginCall = loginCall(email, password);
                 });
-                if (authCheck() != false) {
-                  Navigator.push(
+                bool isloggedIn = await authCheck();
+                if(isloggedIn == true){
+                  if (!mounted) return;
+                   Navigator.push(
                       context,
                       FluentPageRoute(
                           builder: (context) => const DashboardView()));
                 }
+               
+                
               },
             ),
           ),
