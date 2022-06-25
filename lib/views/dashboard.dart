@@ -1,126 +1,72 @@
-import 'package:fluent_ui/fluent_ui.dart';
-import 'package:hermes/services/api.dart';
-import 'package:hermes/utils/themes.dart';
-import 'package:hermes/views/admin.dart';
-
-import 'logout_dialog.dart';
-import 'mesages.dart';
-import 'modules/logs/logs_view.dart';
+import 'package:flutter/material.dart';
+import 'package:hermes/utils/colors.dart';
+import 'package:hermes/views/modules/admin/admin.dart';
+import 'package:hermes/views/modules/logs/list.dart';
+import 'package:hermes/views/modules/messages/mesages.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
 
   @override
-  DashbordViewState createState() => DashbordViewState();
+  State<DashboardView> createState() => _DashboardViewState();
 }
 
-class DashbordViewState extends State<DashboardView> {
-  dynamic _connectionStatus;
-  int index = 0;
+class _DashboardViewState extends State<DashboardView> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  final List<Widget> _widgetOptions = <Widget>[
+    const LogsView(),
+    const Text(
+      'Index 0: Media',
+      style: optionStyle,
+    ),
+    const MessageView(),
+    const AdminView(),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    getPublicIP().then((ip) {
-      setState(() {
-        _connectionStatus = ip;
-      });
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FluentApp(
-      theme: hermesLight,
-      darkTheme: hermesDark,
-      home: NavigationView(
-        appBar: NavigationAppBar(
-            leading: IconButton(
-              icon: const Icon(
-                FluentIcons.chrome_back,
-              ),
-              onPressed: () {
-                const DashboardView();
-              },
-            ),
-            actions: CommandBar(
-              mainAxisAlignment: MainAxisAlignment.end,
-              overflowBehavior: CommandBarOverflowBehavior.noWrap,
-              compactBreakpointWidth: 768,
-              primaryItems: [
-                CommandBarButton(
-                  icon: const Icon(FluentIcons.add),
-                  label: const Text('Add'),
-                  onPressed: () {},
-                ),
-                CommandBarButton(
-                  icon: const Icon(FluentIcons.edit),
-                  label: const Text('Edit'),
-                  onPressed: () {},
-                ),
-              ],
-              secondaryItems: [
-                CommandBarButton(
-                  icon: const Icon(FluentIcons.help),
-                  label: const Text('About the App'),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            title: Text(
-                'Welcome to Hermes Workflow! - IP Address : ${_connectionStatus ?? "loading..."}')),
-        pane: NavigationPane(
-          selected: index,
-          onChanged: (newIndex) {
-            setState(() {
-              index = newIndex;
-            });
-          },
-          displayMode: PaneDisplayMode.compact,
-          items: [
-            PaneItem(
-                icon: const Icon(FluentIcons.go_to_dashboard),
-                title: const Text(
-                  "Dashboard",
-                )),
-            PaneItem(
-                icon: const Icon(FluentIcons.mail),
-                title: const Text("Messages")),
-            PaneItem(
-                icon: const Icon(FluentIcons.admin_a_logo32),
-                title: const Text("Administration")),
-            PaneItem(
-                icon: const Icon(FluentIcons.report_document),
-                title: const Text("Logs"))
-          ],
-          footerItems: [
-            PaneItemSeparator(),
-            PaneItem(
-              icon: const Icon(FluentIcons.leave),
-              title: const Text('Logout'),
-            ),
-          ],
-        ),
-        content: NavigationBody(
-          index: index,
-          children: const [
-            ScaffoldPage(
-              header: Text(
-                "Dashboard",
-                style: TextStyle(fontSize: 60),
-              ),
-              content: Center(
-                child: Text("Welcome to Dashboard Page!"),
-              ),
-            ),
-            MessageView(),
-            AdminView(),
-            LogsView(),
-            LogoutDialog(),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: primaryColor,
+        backgroundColor: bgroundColor,
+        title: const Text('Hello, Awesome User!'),
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: primaryColor,
+        selectedItemColor: white,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_add_check),
+            label: 'logs',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.video_library),
+            label: 'Media ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.mail_rounded),
+            label: 'Messages',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
 }
-

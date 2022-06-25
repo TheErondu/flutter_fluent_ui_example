@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:hermes/services/auth.dart';
-import 'package:hermes/utils/tools.dart';
+import 'package:hermes/utils/functions.dart';
 import 'package:hermes/views/login.dart';
 import 'package:http/http.dart' as http;
 
-var apiUrl = "http://129.205.123.122:8006/api";
+var apiUrl = "http://127.0.0.1:8000/api";
 
 Future<dynamic> getPublicIP() async {
   var url = Uri.parse('https://api64.ipify.org/');
@@ -39,7 +39,8 @@ Future<void> loginCall(String email, String password) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Failed to create album.');
+
+    throw Exception(response.body);
   }
 }
 
@@ -64,10 +65,11 @@ Future<List> getModule(context, query) async {
 
     await Navigator.push(
       context,
-      FluentPageRoute(
+      MaterialPageRoute(
         builder: (BuildContext context) => const LoginPage(),
-        ),);
-         throw Exception('Error: ($res Invalid Token!');
+      ),
+    );
+    throw Exception('Error: ($res Invalid Token!');
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.

@@ -1,8 +1,8 @@
-import 'package:hermes/models/editor_logs.dart';
-import 'package:hermes/models/oblog.dart';
+import 'package:hermes/views/modules/logs/editorlogs/editorlog.dart';
+import 'package:hermes/views/modules/logs/oblogs/oblog.dart';
 import 'package:hermes/utils/debugger.dart';
 
-import 'package:hermes/models/report.dart';
+import 'package:hermes/views/modules/logs/directorlogs/directorlog.dart';
 
 getReportModel(dynamic data, dynamic route) {
   switch (route) {

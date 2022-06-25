@@ -1,3 +1,23 @@
+enum DirectorlogsFields  {
+  id,
+  userId,
+  producer,
+  anchor,
+  director,
+  cameraOperator,
+  cameraOperator2,
+  visionMixer,
+  soundTechnician,
+  tx,
+  graphics,
+  engineer,
+  autocue,
+  bulletin,
+  dtsIn,
+  
+
+}
+
 class Directorlogs {
   int? id;
   int? userId;
@@ -111,7 +131,7 @@ class Directorlogs {
     start = json['start'];
     end = json['end'];
     color = json['color'];
-    
+
     //these fields below are addtional fields initialized for the list view title and subtitle.
     //all models must provide these fields (title and comment) to the listview.
     title = bulletin;

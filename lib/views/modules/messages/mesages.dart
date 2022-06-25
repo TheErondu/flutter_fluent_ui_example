@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 
 class MessageView extends StatefulWidget {
   const MessageView({Key? key}) : super(key: key);
@@ -10,14 +10,10 @@ class MessageView extends StatefulWidget {
 class MessageViewState extends State<MessageView> {
   @override
   Widget build(BuildContext context) {
-    return const ScaffoldPage(
-      header: Text(
-        "Messages",
-        style: TextStyle(fontSize: 60),
-      ),
-      content: Center(
-        child: Text("You have no Messages!"),
-      ),
-    );
+    return const Center(
+        child: Text(
+      "Messages",
+      style: TextStyle(fontSize: 60),
+    ));
   }
 }

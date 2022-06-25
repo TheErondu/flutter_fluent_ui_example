@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:json_path/json_path.dart';
 
 dynamic getJsonField(dynamic response, String jsonPath) {
@@ -36,26 +37,41 @@ extension StringCasingExtension on String {
 
 getFromStorage(String box, dynamic value) async {
   var myBox = await Hive.openBox(box);
-    String data =  myBox.get(value);
+  String data = myBox.get(value);
   return data;
 }
-Future<void>saveToStorage(String box, String key, dynamic value) async {
-  var myBox = await Hive.openBox(box);
-   await myBox.put(key,value);
 
+Future<void> saveToStorage(String box, String key, dynamic value) async {
+  var myBox = await Hive.openBox(box);
+  await myBox.put(key, value);
 }
-Future<void>deletefromStorage(String box, String key, dynamic value) async {
-  var myBox = await Hive.openBox(box);
-   await myBox.delete(key);
 
+Future<void> deletefromStorage(String box, String key, dynamic value) async {
+  var myBox = await Hive.openBox(box);
+  await myBox.delete(key);
 }
-Future<void>saveAllToStorage(String box, Map<dynamic, dynamic> value) async {
-  var myBox = await Hive.openBox(box);
-   await myBox.putAll(value);
 
+Future<void> saveAllToStorage(String box, Map<dynamic, dynamic> value) async {
+  var myBox = await Hive.openBox(box);
+  await myBox.putAll(value);
 }
-Future<void>deleteAllfromStorage(String box, Iterable<dynamic> value) async {
-  var myBox = await Hive.openBox(box);
-   await myBox.deleteAll(value);
 
+Future<void> deleteAllfromStorage(String box, Iterable<dynamic> value) async {
+  var myBox = await Hive.openBox(box);
+  await myBox.deleteAll(value);
+}
+
+String snakeCasetoSentenceCase(String original) {
+  return '${original[0].toUpperCase()}${original.substring(1)}'
+      .replaceAll(RegExp(r'(_|-)+'), ' ');
+}
+
+String textToModel(String original) {
+  return original.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+|\s'), '');
+}
+
+formatDate(String date) {
+  DateTime formattedString = DateTime.parse(date);
+ String formattedDate = DateFormat.yMMMMEEEEd().format(formattedString);
+  return formattedDate;
 }

@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 
 class AdminView extends StatefulWidget {
   const AdminView({Key? key}) : super(key: key);
@@ -10,14 +10,9 @@ class AdminView extends StatefulWidget {
 class AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
-    return const ScaffoldPage(
-      header: Text(
-        "Administration",
-        style: TextStyle(fontSize: 60),
-      ),
-      content: Center(
+    return const Center(
+      child: Center(
         child: Text("No Admin Settings Configured!"),
-      ),
-    );
+      ));
   }
 }

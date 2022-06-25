@@ -1,3 +1,19 @@
+enum EditorLogsFields {
+userId,
+nameOfSuite,
+date,
+firstInterval,
+secondInterval,
+thirdInterval,
+closedAt,
+createdAt,
+updatedAt,
+title,
+start,
+end,
+color,
+comment,
+}
 class EditorLogs {
   int? id;
   int? userId;

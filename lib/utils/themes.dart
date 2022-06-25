@@ -1,6 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 
-ThemeData hermesLight =
-    ThemeData(brightness: Brightness.light, accentColor: Colors.blue);
-ThemeData hermesDark =
-    ThemeData(brightness: Brightness.dark, accentColor: Colors.blue);
+ThemeData hermesLight = ThemeData(brightness: Brightness.light);
+ThemeData hermesDark = ThemeData(brightness: Brightness.dark);

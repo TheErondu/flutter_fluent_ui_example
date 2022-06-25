@@ -1,13 +1,11 @@
 import 'dart:developer';
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:hermes/controllers/crud_controller.dart';
 import 'package:hermes/services/api.dart';
-import 'package:hermes/utils/tools.dart';
-import 'package:hermes/views/modules/logs/logs.dart';
-
-import '../../../controllers/crud_controller.dart';
-import '../../../utils/colors.dart';
-import 'forms/create.dart';
+import 'package:hermes/utils/colors.dart';
+import 'package:hermes/utils/functions.dart';
+import 'directorlogs/views/create.dart';
 
 class LogsView extends StatefulWidget {
   const LogsView({
@@ -34,19 +32,19 @@ class LogsViewState extends State<LogsView> {
 
   int currentIndex = 0;
   late String modelText;
-  int isActiveWidget=2;
+  int isActiveWidget = 2;
 
   @override
   void initState() {
     super.initState();
-    futureLogs = getModule(context,route);
+    futureLogs = getModule(context, route);
   }
 
   @override
   Widget build(BuildContext context) {
     Typography typography = FluentTheme.of(context).typography;
     int tabs = logs.length;
-    return isActiveWidget==1
+    return isActiveWidget == 1
         ? const AddlogForm()
         : ScaffoldPage(
             content: SizedBox.expand(
@@ -100,7 +98,7 @@ class LogsViewState extends State<LogsView> {
                             String title = item.title ?? "loading..";
                             String subtitle = item.comment ?? "loading..";
                             return Card(
-                                backgroundColor: cardsBg,
+                                backgroundColor: getRandColor(),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,29 +156,32 @@ class LogsViewState extends State<LogsView> {
                 ),
               ),
             ),
-            bottomBar:isActiveWidget==2? CommandBar(
-                mainAxisAlignment: MainAxisAlignment.end,
-                overflowBehavior: CommandBarOverflowBehavior.dynamicOverflow,
-                compactBreakpointWidth: 480,
-                primaryItems: [
-                  CommandBarButton(
-                    icon: const Icon(FluentIcons.add),
-                    label: const Text('Add'),
-                    onPressed: () {
-                      showActiveWidget("addForm");
-                    },
-                  ),
-                  CommandBarButton(
-                    icon: const Icon(FluentIcons.edit),
-                    label: const Text('Edit'),
-                    onPressed: () {},
-                  ),
-                  CommandBarButton(
-                    icon: const Icon(FluentIcons.delete),
-                    label: const Text('Delete'),
-                    onPressed: () {},
-                  ),
-                ]):null,
+            bottomBar: isActiveWidget == 2
+                ? CommandBar(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    overflowBehavior:
+                        CommandBarOverflowBehavior.dynamicOverflow,
+                    compactBreakpointWidth: 480,
+                    primaryItems: [
+                        CommandBarButton(
+                          icon: const Icon(FluentIcons.add),
+                          label: const Text('Add'),
+                          onPressed: () {
+                            showActiveWidget("addForm");
+                          },
+                        ),
+                        CommandBarButton(
+                          icon: const Icon(FluentIcons.edit),
+                          label: const Text('Edit'),
+                          onPressed: () {},
+                        ),
+                        CommandBarButton(
+                          icon: const Icon(FluentIcons.delete),
+                          label: const Text('Delete'),
+                          onPressed: () {},
+                        ),
+                      ])
+                : null,
           );
   }
 
@@ -189,7 +190,7 @@ class LogsViewState extends State<LogsView> {
       currentIndex = index;
       modelText = textToModel(logs.entries.elementAt(index).key);
       route = modelText;
-      futureLogs = getModule(context,route);
+      futureLogs = getModule(context, route);
       log(modelText);
     });
   }

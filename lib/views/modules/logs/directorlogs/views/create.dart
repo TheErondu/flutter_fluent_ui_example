@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart';
 
 class AddlogForm extends StatefulWidget {
   const AddlogForm({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class AddlogForm extends StatefulWidget {
 class _AddlogFormState extends State<AddlogForm> {
   @override
   Widget build(BuildContext context) {
-    return const ScaffoldPage(
+    return const Scaffold(
       
     );
   }
